@@ -1,3 +1,9 @@
+## [1.22.0](https://github.com/VenusIsJaded/Venus-Patches/compare/v1.21.2...v1.22.0) (2026-11-17)
+
+### ✨ New Features
+
+* **Discord - Material shapes:** Rounder corners on cards, sheets, buttons and fields, like Material 3 Expressive
+
 ## [1.21.2](https://github.com/VenusIsJaded/Venus-Patches/compare/v1.21.1...v1.21.2) (2026-11-17)
 
 ### ✨ New Features

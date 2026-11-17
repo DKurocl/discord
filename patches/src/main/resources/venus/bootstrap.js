@@ -63,6 +63,7 @@
     if (features.fastDeleteChannels) selectModules([10596, 5400, 1128, 2068, 4845, 1087]);
     if (features.mutualGroupDMs) selectModules([14197, 2068, 1392, 1114]);
     if (features.noCosmetics) selectModules([584]);
+    if (features.materialShapes) targetModules[681] = 1;
     if (features.platformSpoof) selectModules([14713]);
     if (features.guildLurk) targetModules[13422] = 1;
     if (features.quietReplies) selectModules([1392, 5532, 9990]);
@@ -78,7 +79,7 @@
     if (features.experiments) selectModules([584, 1392, 1403]);
     if (features.hideAnything) selectModules([14015, 15735, 15736, 9419, 10331, 16133, 16225, 12892, 12897, 12901, 12908, 12909, 13780, 14204, 15590, 17157, 15046, 8805, 9052, 10858, 12942, 14988, 14994, 14925, 14998, 11678, 11679, 14197, 10939, 7158, 14182, 14101, 17156, 17263, 13151, 12000, 10838, 17949, 16773, 17265, 17881, 17869, 11164, 9978, 13759, 12696, 10650, 13769, 8494, 9873]);
     if (features.voiceOptions) { targetModules[584] = 1; targetModules[11372] = 1; targetModules[6145] = 1; }
-    const revision = "1.21.2";
+    const revision = "1.22.0";
     // The Discord build these patches are pinned to (DiscordPatches.kt compatibleWith); shown on the About page.
     const DISCORD_VERSION = "351.11";
     // Module 120 owns setUpDefaltReactNativeEnvironment in this exact asset.
@@ -10498,6 +10499,18 @@
             action.settings = Object.assign({}, incoming, {proto:copy});
         } catch (_) {}
         return false;
+    }
+    // Material shapes: Discord's corner radius tokens (none 0, xs 4, sm 8, md 12, lg 16, xl 24, xxl 32 in 351.11) on
+    // Material 3 Expressive's rounder scale. Every card, sheet, button and field reads its corners from this one object
+    // (tokens/radii, re-exported as tokens.radii), so changing it as Discord defines it rounds the whole app at once,
+    // before any style is made. Patch-time only: the settings file is not read yet when the tokens are defined.
+    const MATERIAL_RADII = {xs:6, sm:12, md:16, lg:20, xl:28, xxl:36};
+    function materialShapes(exports) {
+        try {
+            const radii = exports && exports.Radius;
+            if (!radii || typeof radii !== "object") return;
+            for (const key in MATERIAL_RADII) if (typeof radii[key] === "number") radii[key] = MATERIAL_RADII[key];
+        } catch (_) {}
     }
     // Hide profile cosmetics: avatar decorations, profile effects, nameplates, name styles and profile banners are taken
     // out of what Discord receives, before any store keeps them, so nothing draws them and their images and videos are
@@ -22955,6 +22968,7 @@
             case 10035: return features.favouriteAnything ? hookExport(exports, "addFavoriteGIF", favouriteAdd) : exports;
             case 10038: return features.favouriteAnything ? hookExport(exports, "useFavoriteGIFsMobile", favouriteList) : exports;
             case 14197: return features.mutualGroupDMs ? hookComponent(exports, mutualGroupsRow) : exports;
+            case 681: if (features.materialShapes) materialShapes(exports); return exports;
             case 2068: channelStore = exports.default; return exports;
             case 12849: return features.noTyping ? replaceValue(exports, "default", hookExport(hookExport(exports.default, "startTyping", typing), "stopTyping", typing)) : exports;
             case 10596:
