@@ -1,3 +1,9 @@
+## [1.23.0](https://github.com/VenusIsJaded/Venus-Patches/compare/v1.22.0...v1.23.0) (2026-11-17)
+
+### ✨ New Features
+
+* **Discord - Google-style icon:** Discord's icon as a white circle with the logo in a soft gradient, like Google's own apps
+
 ## [1.22.0](https://github.com/VenusIsJaded/Venus-Patches/compare/v1.21.2...v1.22.0) (2026-11-17)
 
 ### ✨ New Features

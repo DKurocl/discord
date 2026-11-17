@@ -68,6 +68,7 @@ You can also import `patches-<version>.mpp` from [Releases](https://github.com/V
 | | HypeSquad house | Join or leave a HypeSquad house |
 | | Custom idle time | Choose when you go Idle, or never |
 | | Mutual group DMs | Group DMs you share with someone, on their profile |
+| | Google-style icon | Discord's icon as a white circle with the logo in a soft gradient, like Google's apps |
 | | Material shapes | Rounder corners on cards, sheets, buttons and fields, like Material 3 Expressive |
 | | Hide profile cosmetics | No avatar decorations, profile effects, nameplates, name styles or profile banners |
 | | Platform spoof | Show as desktop, web or console. **Against Discord's rules, may risk your account** |
