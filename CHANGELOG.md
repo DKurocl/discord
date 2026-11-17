@@ -1,3 +1,9 @@
+## [1.21.2](https://github.com/VenusIsJaded/Venus-Patches/compare/v1.21.1...v1.21.2) (2026-11-17)
+
+### ✨ New Features
+
+* **Discord - Hide profile cosmetics:** Hide avatar decorations, profile effects, nameplates, name styles and profile banners
+
 ## [1.21.1](https://github.com/VenusIsJaded/Venus-Patches/compare/v1.21.0...v1.21.1) (2026-11-03)
 
 ### 🐛 Bug Fixes

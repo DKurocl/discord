@@ -62,6 +62,7 @@
     if (features.pauseInvites) selectModules([17433, 2090, 4845, 1087]);
     if (features.fastDeleteChannels) selectModules([10596, 5400, 1128, 2068, 4845, 1087]);
     if (features.mutualGroupDMs) selectModules([14197, 2068, 1392, 1114]);
+    if (features.noCosmetics) selectModules([584]);
     if (features.platformSpoof) selectModules([14713]);
     if (features.guildLurk) targetModules[13422] = 1;
     if (features.quietReplies) selectModules([1392, 5532, 9990]);
@@ -77,7 +78,7 @@
     if (features.experiments) selectModules([584, 1392, 1403]);
     if (features.hideAnything) selectModules([14015, 15735, 15736, 9419, 10331, 16133, 16225, 12892, 12897, 12901, 12908, 12909, 13780, 14204, 15590, 17157, 15046, 8805, 9052, 10858, 12942, 14988, 14994, 14925, 14998, 11678, 11679, 14197, 10939, 7158, 14182, 14101, 17156, 17263, 13151, 12000, 10838, 17949, 16773, 17265, 17881, 17869, 11164, 9978, 13759, 12696, 10650, 13769, 8494, 9873]);
     if (features.voiceOptions) { targetModules[584] = 1; targetModules[11372] = 1; targetModules[6145] = 1; }
-    const revision = "1.21.1";
+    const revision = "1.21.2";
     // The Discord build these patches are pinned to (DiscordPatches.kt compatibleWith); shown on the About page.
     const DISCORD_VERSION = "351.11";
     // Module 120 owns setUpDefaltReactNativeEnvironment in this exact asset.
@@ -99,7 +100,7 @@
         iconPacks:false, iconPacksTheme:true,
         messageHighlight:false, messageHighlightThickness:2, messageHighlightBrightness:50, messageHighlightPingColor:"default", serverInfo:false, serverInfoFriends:true, serverEdit:false,
         fixEmbeds:false, fixEmbedsSites:"", fixEmbedsOptions:"", tenorGifs:false, tenorGifsSource:"both", hideBlocked:false, hideBlockedBlocked:true, hideBlockedIgnored:true, hideBlockedReplies:false, hideBlockedCloseDms:false, bulkDelete:false, bulkDeleteConfirm:true, bulkDeleteIncludeCached:true, experiments:false, noHandsfree:false, voiceOptions:false, voiceOptionsVolume:false, voiceOptionsVolumeLevel:50, voiceOptionsOutput:"default", voiceOptionsJoinSound:true, voiceOptionsLeaveSound:true, voiceOptionsSoundVolume:100, voiceOptionsExit:false, voiceOptionsExitSound:"", cleanChannels:false, cleanChannelsEmoji:true, cleanChannelsSymbols:true, cleanChannelsFonts:true, cleanChannelsSpaces:false, anonFiles:false, staffTag:false, staffTagOwner:true, staffTagAdmin:true, staffTagManager:true, staffTagMod:true, staffTagCrown:true, removedAlerts:false, removedAlertsFriends:true, removedAlertsServers:true, removedAlertsClosed:true, removedAlertsPush:false, fullImages:false, fullImagesChat:true, fullImagesViewer:true, fullImagesGifs:false, fullImagesAvatars:true, alwaysTrust:false, alwaysTrustLinks:true, alwaysTrustFiles:true, noConfirmPin:false, clickableMentions:false, expandBar:false, expandBarSending:true, expandBarChats:true, silentLeave:false, silentEdit:false, silentEditNotice:true, silentDelete:false, localEdit:false, localEditMark:true, guildLurk:false, guildLurkIds:"", quietReplies:false, viewRaw:false, viewRawMessages:true, viewRawChannels:true, viewRawServers:true, viewRawPeople:true, viewRawRoles:true, viewRawHideContact:true, viewRawWrap:true, timeoutDuration:false, dndBanners:false, voiceDownload:false, cloneExpressions:false, listenAlong:false, listenAlongOffset:0, backgroundMedia:false, backgroundMediaAudio:true, backgroundMediaVideo:true, backgroundMediaSkip:10, landscapeFull:false, quietRepliesGuilds:true, quietRepliesGroups:true, quietRepliesMentioned:false, compressUploads:false, compressUploadsPhotos:true, compressUploadsVideos:true, compressUploadsAudio:true, hideAnything:false, hideAnythingSpots:"", fakeDeafen:false, fakeDeafenMuteMic:true, language:"auto", hiddenFeatures:"",
-        hypeSquad:false, customIdle:false, customIdleMinutes:10, pauseInvites:false, fastDeleteChannels:false, fastDeleteChannelsConfirm:true, fastDeleteChannelsMenu:true, mutualGroupDMs:false, platformSpoof:false, platformSpoofDevice:"desktop" };
+        hypeSquad:false, customIdle:false, customIdleMinutes:10, pauseInvites:false, fastDeleteChannels:false, fastDeleteChannelsConfirm:true, fastDeleteChannelsMenu:true, mutualGroupDMs:false, noCosmetics:false, platformSpoof:false, platformSpoofDevice:"desktop" };
     // The settings every feature starts from, for Reset to defaults on the Backup page.
     let DEFAULT_SETTINGS = null;
     function defaultSettings() {
@@ -117,7 +118,7 @@
             iconPacks: false, iconPacksTheme: true,
             messageHighlight: false, messageHighlightThickness: 2, messageHighlightBrightness: 50, messageHighlightPingColor: "default", serverInfo: false, serverInfoFriends: true, serverEdit: false,
             fixEmbeds: false, fixEmbedsSites: "", fixEmbedsOptions: "", tenorGifs: false, tenorGifsSource: "both", hideBlocked: false, hideBlockedBlocked: true, hideBlockedIgnored: true, hideBlockedReplies: false, hideBlockedCloseDms: false, bulkDelete: false, bulkDeleteConfirm: true, bulkDeleteIncludeCached: true, experiments: false, noHandsfree: false, voiceOptions: false, voiceOptionsVolume: false, voiceOptionsVolumeLevel: 50, voiceOptionsOutput: "default", voiceOptionsJoinSound: true, voiceOptionsLeaveSound: true, voiceOptionsSoundVolume: 100, voiceOptionsExit: false, voiceOptionsExitSound: "", cleanChannels: false, cleanChannelsEmoji: true, cleanChannelsSymbols: true, cleanChannelsFonts: true, cleanChannelsSpaces: false, anonFiles: false, staffTag: false, staffTagOwner: true, staffTagAdmin: true, staffTagManager: true, staffTagMod: true, staffTagCrown: true, removedAlerts: false, removedAlertsFriends: true, removedAlertsServers: true, removedAlertsClosed: true, removedAlertsPush: false, fullImages: false, fullImagesChat: true, fullImagesViewer: true, fullImagesGifs: false, fullImagesAvatars: true, alwaysTrust: false, alwaysTrustLinks: true, alwaysTrustFiles: true, noConfirmPin: false, clickableMentions: false, expandBar: false, expandBarSending: true, expandBarChats: true, silentLeave: false, silentEdit: false, silentEditNotice: true, silentDelete: false, localEdit: false, localEditMark: true, guildLurk: false, guildLurkIds: "", quietReplies: false, viewRaw: false, viewRawMessages: true, viewRawChannels: true, viewRawServers: true, viewRawPeople: true, viewRawRoles: true, viewRawHideContact: true, viewRawWrap: true, timeoutDuration: false, dndBanners: false, voiceDownload: false, cloneExpressions: false, listenAlong: false, listenAlongOffset: 0, backgroundMedia: false, backgroundMediaAudio: true, backgroundMediaVideo: true, backgroundMediaSkip: 10, landscapeFull: false, quietRepliesGuilds: true, quietRepliesGroups: true, quietRepliesMentioned: false, compressUploads: false, compressUploadsPhotos: true, compressUploadsVideos: true, compressUploadsAudio: true, hideAnything: false, hideAnythingSpots: "", fakeDeafen: false, fakeDeafenMuteMic: true, language: "auto", hiddenFeatures: "",
-            hypeSquad: false, customIdle: false, customIdleMinutes: 10, pauseInvites: false, fastDeleteChannels: false, fastDeleteChannelsConfirm: true, fastDeleteChannelsMenu: true, mutualGroupDMs: false, platformSpoof: false, platformSpoofDevice: "desktop"
+            hypeSquad: false, customIdle: false, customIdleMinutes: 10, pauseInvites: false, fastDeleteChannels: false, fastDeleteChannelsConfirm: true, fastDeleteChannelsMenu: true, mutualGroupDMs: false, noCosmetics: false, platformSpoof: false, platformSpoofDevice: "desktop"
         }));
     }
     // Backup and restore (#68): when you last saved a backup, and whether a restore is being applied right now.
@@ -1216,7 +1217,7 @@
         youBarSettings:[7368, "SettingsIcon"], quests:[13929, "QuestsIcon"],
         badges:[9211, "TrophyIcon"], userNotif:[9045, "BellIcon"], accountSwitcher:[8489, "GroupIcon"], appIcons:[8506, "AppsIcon"],
         compressUploads:[11636, "FileUpIcon"], customThemes:[16412, "EyeDropperIcon"], iconPacks:[11449, "ImageSparkleIcon"], messageHighlight:[17627, "PaintbrushThinIcon"], serverInfo:[5145, "CircleInformationIcon"], serverEdit:[10023, "PencilIcon"], fixEmbeds:[13836, "EmbedIcon"], tenorGifs:[10051, "GifIcon"], nitroThemes:[11733, "SparklesIcon"], materialYou:[16320, "PaintPaletteIcon"], hideBlocked:[11619, "ChatShieldIcon"], bulkDelete:[7144, "CircleCheckIcon"], experiments:[16650, "BeakerIcon"], cleanChannels:[12158, "MagicWandIcon"], noHandsfree:[13214, "HeadphonesIcon"], voiceOptions:[8501, "VoiceNormalIcon"], staffTag:[10563, "CrownIcon"], removedAlerts:[5135, "UserMinusIcon"], hideAnything:[10561, "XLargeIcon"], fullImages:[12328, "ImagesIcon"], alwaysTrust:[10733, "ShieldIcon"], noConfirmPin:[10641, "PinIcon"], clickableMentions:[8490, "AtIcon"], expandBar:[16089, "FullscreenEnterIcon"], quietReplies:[10654, "BellSlashIcon"], viewRaw:[12003, "FileIcon"], timeoutDuration:[5150, "ClockIcon"], dndBanners:[13603, "BellZIcon"], voiceDownload:[5143, "DownloadIcon"], cloneExpressions:[11657, "ImagePlusIcon"], listenAlong:[13214, "HeadphonesIcon"], backgroundMedia:[8674, "PlayIcon"], landscapeFull:[16089, "FullscreenEnterIcon"], silentLeave:[11384, "DoorExitIcon"], guildLurk:[6929, "EyeIcon"], silentEdit:[13745, "PencilSparkleIcon"], silentDelete:[5148, "TrashIcon"], localEdit:[10023, "PencilIcon"],
-        hypeSquad:[18747, "HomeIcon"], customIdle:[14205, "UserClockIcon"], pauseInvites:[8676, "PauseIcon"], fastDeleteChannels:[18679, "ChannelListIcon"], mutualGroupDMs:[8489, "GroupIcon"], platformSpoof:[5133, "UserPlatformIcon"]};
+        hypeSquad:[18747, "HomeIcon"], customIdle:[14205, "UserClockIcon"], pauseInvites:[8676, "PauseIcon"], fastDeleteChannels:[18679, "ChannelListIcon"], mutualGroupDMs:[8489, "GroupIcon"], noCosmetics:[6927, "EyeSlashIcon"], platformSpoof:[5133, "UserPlatformIcon"]};
     const venusIcons = new Map();
     function venusIcon(id, name, fallback) {
         const slot = id + ":" + name;
@@ -1781,6 +1782,7 @@
         withOptions("people", "customIdle", "VENUS_CUSTOMIDLE", "Custom idle time", "Choose when Discord sets you to Idle, or never.", "Idle time", CustomIdleSettings);
         withOptions("people", "platformSpoof", "VENUS_PLATFORMSPOOF", "Platform spoof", "Show as desktop, web or console instead of mobile. Discord doesn't allow this.", "Platform spoof", PlatformSpoofSettings);
         toggle("people", "mutualGroupDMs", "Mutual group DMs", "Profiles show the group DMs you share with that person.");
+        toggle("people", "noCosmetics", "Hide profile cosmetics", "Hides avatar decorations, profile effects, nameplates, name styles and profile banners.");
         toggle("people", "silentLeave", "Leave group DMs silently", "Leave group DMs without the \"left the group\" message.");
         withOptions("messages", "silentEdit", "VENUS_SILENTEDIT", "Edit without the (edited) mark", "Only works when your message is the latest in the chat. Others see a new message, not an edit.", "Silent edit", SilentEditSettings);
         toggle("messages", "silentDelete", "Delete without a trace", "Blanks your message before deleting it, so message loggers have nothing to keep.");
@@ -10496,6 +10498,51 @@
             action.settings = Object.assign({}, incoming, {proto:copy});
         } catch (_) {}
         return false;
+    }
+    // Hide profile cosmetics: avatar decorations, profile effects, nameplates, name styles and profile banners are taken
+    // out of what Discord receives, before any store keeps them, so nothing draws them and their images and videos are
+    // never loaded. Matched by the API's own field names (snake_case on the wire, camelCase once Discord has read them),
+    // wherever they sit: a user, a server member, a profile, a message's author, a friend. A banner goes only from a
+    // person or a profile, never from a server. Like Discord's own data, what was already loaded stays until the next
+    // reconnect or restart, so turning the switch on or off shows fully then.
+    const COSMETIC_KEYS = new Set(["avatar_decoration_data", "avatarDecorationData", "avatar_decoration", "avatarDecoration",
+        "collectibles", "display_name_styles", "displayNameStyles", "profile_effect", "profileEffect", "profile_effect_id",
+        "profileEffectId", "theme_colors", "themeColors", "popout_animation_particle_type", "popoutAnimationParticleType"]);
+    const COSMETIC_PROFILES = new Set(["user_profile", "userProfile", "guild_member_profile", "guildMemberProfile"]);
+    const COSMETIC_BANNERS = new Set(["banner", "bannerSrc"]);
+    const cosmetics = {attached:false};
+    function cosmeticsOn() {
+        // Before the settings file is read (a cold start can connect first), a patched-in switch counts as on: the
+        // first data is the biggest, and its cosmetics would otherwise stay until the next restart.
+        return status.storage === "ready" ? enabled("noCosmetics") : !!features.noCosmetics;
+    }
+    function cosmeticsScrub(value, depth, parentKey) {
+        if (depth > 9) return;
+        if (Array.isArray(value)) {
+            for (let i = 0; i < value.length; i++) { const item = value[i]; if (item !== null && typeof item === "object") cosmeticsScrub(item, depth + 1, parentKey); }
+            return;
+        }
+        if (ArrayBuffer.isView(value) || value instanceof ArrayBuffer) return;
+        const person = typeof value.username === "string" || COSMETIC_PROFILES.has(parentKey) ||
+            (Array.isArray(value.roles) && ("joined_at" in value || "joinedAt" in value));
+        for (const key in value) {
+            if (!Object.prototype.hasOwnProperty.call(value, key)) continue;
+            if (COSMETIC_KEYS.has(key) || person && COSMETIC_BANNERS.has(key)) {
+                if (value[key] != null) try { delete value[key]; } catch (_) {}
+                continue;
+            }
+            const item = value[key];
+            if (item !== null && typeof item === "object") cosmeticsScrub(item, depth + 1, key);
+        }
+    }
+    function cosmeticsIntercept(action) {
+        try { if (action && typeof action === "object" && cosmeticsOn()) cosmeticsScrub(action, 0, ""); } catch (_) {}
+        return false;
+    }
+    function cosmeticsInit(dispatcher) {
+        if (cosmetics.attached || !dispatcher || typeof dispatcher.addInterceptor !== "function") return;
+        cosmetics.attached = true;
+        try { dispatcher.addInterceptor(cosmeticsIntercept); } catch (_) { cosmetics.attached = false; }
     }
     function nitroThemeAttach(dispatcher) {
         if (nitroTheme.attached || !dispatcher || typeof dispatcher.addInterceptor !== "function") return;
@@ -22963,6 +23010,7 @@
                 if (features.hideBlocked && exports && exports.default) hideBlockedInit(exports.default);
                 if (features.translate && exports && exports.default) translateInit(exports.default);
                 if (features.validUser && exports && exports.default) validInit(exports.default);
+                if (features.noCosmetics && exports && exports.default) cosmeticsInit(exports.default);
                 if (features.quests) questsInit(exports.default);
                 if (features.badges && exports && exports.default) badgesInit(exports.default);
                 if ((features.nitroThemes || features.accountSwitcher) && exports && exports.default) nitroThemeAttach(exports.default);
