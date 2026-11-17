@@ -1,3 +1,13 @@
+## [1.23.1](https://github.com/VenusIsJaded/Venus-Patches/compare/v1.23.0...v1.23.1) (2026-11-17)
+
+### 🐛 Bug Fixes
+
+* **Discord - Google-style icon:** Fixed the launcher showing Android's placeholder robot instead of the logo, because the logo's outline couldn't be read on the phone
+
+### 🔧 Improvements
+
+* **Discord - Hide profile cosmetics:** Turned on as soon as it is patched in, instead of waiting for its switch
+
 ## [1.23.0](https://github.com/VenusIsJaded/Venus-Patches/compare/v1.22.0...v1.23.0) (2026-11-17)
 
 ### ✨ New Features

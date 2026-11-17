@@ -207,21 +207,12 @@ val customBranding = resourcePatch(
     }
 }
 
-/** Discord's logo (Simple Icons, CC0) on its own 24-unit grid. */
-private const val DISCORD_LOGO = "M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"
-
-/** Gradient stops per Google-style icon variant, as (offset, color). */
+/** Google-style icon variants: the option's label to the picture's file name in the bundle. */
 private val GOOGLE_ICON_STYLES = mapOf(
     "Blurple to violet" to "A",
     "Blue, violet and pink" to "B",
     "Blurple on a light tint" to "C",
     "Blurple with a soft shine" to "D",
-)
-private val GOOGLE_ICON_STOPS = mapOf(
-    "A" to listOf("0" to "#FF5865F2", "1" to "#FF8B5CF6"),
-    "B" to listOf("0" to "#FF3F7BFF", "0.55" to "#FF6E5CF6", "1" to "#FFD45CE8"),
-    "C" to listOf("0" to "#FF6B78FF", "1" to "#FF4752C4"),
-    "D" to listOf("0" to "#FF7A86FF", "0.6" to "#FF5865F2", "1" to "#FF4A50D9"),
 )
 private const val GOOGLE_ICON = "venus_google_icon"
 
@@ -246,33 +237,17 @@ val googleStyleIcon = resourcePatch(
         title = "Colors",
         description = "The logo's gradient.",
         required = true,
-    ) { it != null && it in GOOGLE_ICON_STOPS }
+    ) { it != null && it in GOOGLE_ICON_STYLES.values }
 
     finalize {
-        val stops = GOOGLE_ICON_STOPS[style.value] ?: throw PatchException("Unknown icon style ${style.value}")
-        val background = if (style.value == "C") "#FFEEF0FF" else "#FFFFFFFF"
-        // The gradient runs corner to corner across the logo's own 24-unit grid.
-        writeResource("res/color/${GOOGLE_ICON}_gradient.xml", """
-            <?xml version="1.0" encoding="utf-8"?>
-            <gradient xmlns:android="$ANDROID_NS" android:type="linear"
-                android:startX="1" android:startY="3" android:endX="23" android:endY="21">
-            """.trimIndent() + "\n" + stops.joinToString("") { (offset, color) ->
-                "    <item android:offset=\"$offset\" android:color=\"$color\" />\n" } + "</gradient>\n")
-        for ((name, fill) in listOf("${GOOGLE_ICON}_logo" to "@color/${GOOGLE_ICON}_gradient", "${GOOGLE_ICON}_mono" to "#FF000000"))
-            writeResource("res/drawable/$name.xml", """
-                <?xml version="1.0" encoding="utf-8"?>
-                <vector xmlns:android="$ANDROID_NS" android:width="24dp" android:height="24dp"
-                    android:viewportWidth="24" android:viewportHeight="24">
-                    <path android:fillColor="$fill" android:pathData="$DISCORD_LOGO" />
-                </vector>
-            """.trimIndent() + "\n")
-        // The launcher shows the middle 72dp of a 108dp adaptive icon; a 31.5% inset makes the logo 40dp wide there,
-        // the size Google's own logos take.
-        for (name in listOf("logo", "mono"))
-            writeResource("res/drawable/${GOOGLE_ICON}_${name}_inset.xml", """
-                <?xml version="1.0" encoding="utf-8"?>
-                <inset xmlns:android="$ANDROID_NS" android:drawable="@drawable/${GOOGLE_ICON}_$name" android:inset="31.5%" />
-            """.trimIndent() + "\n")
+        val variant = style.value?.takeIf { it in GOOGLE_ICON_STYLES.values } ?: "A"
+        fun picture(name: String) = object {}.javaClass.getResourceAsStream("/venus/icon/$name.png")?.use { it.readBytes() }
+            ?: throw PatchException("Icon picture $name missing from the bundle")
+        // Finished pictures, not vectors: the 108dp layer at xxxhdpi (432 px) with the logo 40dp wide in the middle and
+        // its gradient already drawn, so no launcher has a path or a gradient resource to read.
+        get("res/drawable-nodpi/${GOOGLE_ICON}_logo.png", false).apply { parentFile.mkdirs(); writeBytes(picture("${variant}_fg")) }
+        get("res/drawable-nodpi/${GOOGLE_ICON}_mono.png", false).apply { parentFile.mkdirs(); writeBytes(picture("mono")) }
+        val background = if (variant == "C") "#FFEEF0FF" else "#FFFFFFFF"
         writeResource("res/drawable/${GOOGLE_ICON}_background.xml", """
             <?xml version="1.0" encoding="utf-8"?>
             <shape xmlns:android="$ANDROID_NS" android:shape="rectangle"><solid android:color="$background" /></shape>
@@ -281,8 +256,8 @@ val googleStyleIcon = resourcePatch(
             <?xml version="1.0" encoding="utf-8"?>
             <adaptive-icon xmlns:android="$ANDROID_NS">
                 <background android:drawable="@drawable/${GOOGLE_ICON}_background" />
-                <foreground android:drawable="@drawable/${GOOGLE_ICON}_logo_inset" />
-                <monochrome android:drawable="@drawable/${GOOGLE_ICON}_mono_inset" />
+                <foreground android:drawable="@drawable/${GOOGLE_ICON}_logo" />
+                <monochrome android:drawable="@drawable/${GOOGLE_ICON}_mono" />
             </adaptive-icon>
         """.trimIndent() + "\n")
         // Phones without adaptive icons: the same circle as a plain drawable.
@@ -290,7 +265,7 @@ val googleStyleIcon = resourcePatch(
             <?xml version="1.0" encoding="utf-8"?>
             <layer-list xmlns:android="$ANDROID_NS">
                 <item><shape android:shape="oval"><solid android:color="$background" /></shape></item>
-                <item android:drawable="@drawable/${GOOGLE_ICON}_logo_inset" />
+                <item android:drawable="@drawable/${GOOGLE_ICON}_logo" />
             </layer-list>
         """.trimIndent() + "\n")
         document("AndroidManifest.xml").use { manifest ->
