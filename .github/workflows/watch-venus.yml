@@ -1,0 +1,28 @@
+name: Watch Venus releases
+
+# Once a day: when Venus publishes a release newer than the one this fork is built on, this run fails with a
+# notice, and GitHub notifies the repository's owner. Port it, then update .github/venus-base.
+on:
+  schedule:
+    - cron: "17 7 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compare with the Venus release this fork is built on
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          base="$(tr -d '[:space:]' < .github/venus-base)"
+          latest="$(gh api repos/VenusIsJaded/Venus-Patches/releases/latest --jq .tag_name)"
+          echo "This fork is built on Venus $base; the newest Venus is $latest."
+          if [ "$latest" != "$base" ]; then
+            echo "::error title=New Venus release::Venus $latest is out; this fork is still on $base. Time to port it."
+            exit 1
+          fi
